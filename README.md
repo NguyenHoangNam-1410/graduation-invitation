@@ -69,3 +69,9 @@ Danh sách tên trong `.env.local` không cần deploy lại; chỉ chạy `npm 
 - Logo HCMCUT.svg: Nguyenhai314, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:HCMCUT.svg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), không chỉnh sửa.
 - Font Allura, Cormorant Garamond và DM Sans: Google Fonts; giấy phép ở `docs/assets/FONT-LICENSES.txt`.
 - Sơ đồ trường và các chỉ dẫn đến bãi xe / trạm xe buýt do chủ thiệp cung cấp.
+
+## Ảnh preview khi chia sẻ
+
+Ảnh dùng chung: `docs/assets/graduation-preview.jpg` (1200 × 630 px). Trang khai báo ảnh bằng Open Graph và Twitter Card trong phần `<head>` để ứng dụng chat có thể lấy ảnh mà không chạy JavaScript.
+
+Ảnh không chứa tên người nhận; tên cá nhân vẫn hiển thị khi mở đường dẫn có `?to=...`. Website không thay đổi hoặc xóa tham số này khi chia sẻ.
