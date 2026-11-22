@@ -4,10 +4,13 @@
   "private": true,
   "type": "module",
   "description": "A personal graduation invitation with a campus arrival guide and individual guest links.",
-  "engines": { "node": ">=22" },
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "node scripts/serve.mjs",
     "links": "node scripts/generate-links.mjs",
-    "check": "node --test"
+    "check": "node --test",
+    "check:fonts": "python scripts/check-fonts.py"
   }
 }

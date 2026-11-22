@@ -54,10 +54,10 @@ test('reports malformed mixed JSON rather than corrupting names', () => {
 });
 
 test('uses the selected preview version consistently for every recipient', () => {
-  const links = buildInvitationLinks('https://example.github.io/invitation/', ['Bạn A', 'Bạn B'], '6');
+  const links = buildInvitationLinks('https://example.github.io/invitation/', ['Bạn A', 'Bạn B'], 'next');
   assert.equal(links.length, 2);
   for (const {name, url} of links) {
-    assert.equal(new URL(url).searchParams.get('v'), '6');
+    assert.equal(new URL(url).searchParams.get('v'), 'next');
     assert.equal(new URL(url).searchParams.get('to'), name);
   }
 });
