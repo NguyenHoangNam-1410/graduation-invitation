@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { buildInvitationLinks, validateGuests, parseGuestNames } from '../lib/invitations.mjs';
+import { buildInvitationLinks, validateGuests, parseGuestNames, DEFAULT_PREVIEW_VERSION } from '../lib/invitations.mjs';
 
 test('Vietnamese names and URL punctuation remain one recipient parameter', () => {
   const name = 'Quốc Bảo & An + Bình #1';
@@ -8,7 +8,8 @@ test('Vietnamese names and URL punctuation remain one recipient parameter', () =
   const parsed = new URL(url);
   assert.equal(parsed.pathname, '/invitation/');
   assert.equal(parsed.searchParams.get('to'), name);
-  assert.equal([...parsed.searchParams].length, 1);
+  assert.equal(parsed.searchParams.get('v'), DEFAULT_PREVIEW_VERSION);
+  assert.deepEqual([...parsed.searchParams.keys()], ['to', 'v']);
 });
 
 test('normalizes Unicode and avoids duplicate links', () => {
@@ -50,4 +51,27 @@ test('reports malformed mixed JSON rather than corrupting names', () => {
   assert.throws(() => parseGuestNames('["Bạn A", Bạn B]'), /chưa đúng định dạng/);
   assert.throws(() => parseGuestNames('[Bạn A, Bạn B'), /thiếu dấu/);
   assert.throws(() => parseGuestNames('{"name":"Bạn A"}'), /chưa đúng định dạng/);
+});
+
+test('uses the selected preview version consistently for every recipient', () => {
+  const links = buildInvitationLinks('https://example.github.io/invitation/', ['Bạn A', 'Bạn B'], '6');
+  assert.equal(links.length, 2);
+  for (const {name, url} of links) {
+    assert.equal(new URL(url).searchParams.get('v'), '6');
+    assert.equal(new URL(url).searchParams.get('to'), name);
+  }
+});
+
+test('replaces stale URL versions with the configured version', () => {
+  const [{url}] = buildInvitationLinks('https://example.github.io/invitation/?v=2&to=Old#map', ['Bạn A'], '2026-11-22.5');
+  const parsed = new URL(url);
+  assert.deepEqual(parsed.searchParams.getAll('v'), ['2026-11-22.5']);
+  assert.equal(parsed.searchParams.get('to'), 'Bạn A');
+  assert.equal(parsed.hash, '');
+});
+
+test('rejects empty or malformed preview versions with a clear error', () => {
+  for (const version of ['', ' ', '5&to=Other']) {
+    assert.throws(() => buildInvitationLinks('https://example.github.io/invitation/', ['Bạn A'], version), /PREVIEW_VERSION/);
+  }
 });

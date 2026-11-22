@@ -14,6 +14,7 @@ Cần Node.js 22 trở lên; không cần cài thêm thư viện.
 ```dotenv
 SITE_URL=https://NguyenHoangNam-1410.github.io/graduation-invitation/
 GUEST_NAMES='Minh Anh, Quốc Bảo, Như Mai'
+PREVIEW_VERSION=5
 ```
 
 Có thể nhập tên ngăn bằng dấu phẩy như trên, hoặc dùng mảng JSON có dấu nháy kép quanh từng tên. Danh sách dạng `[Bạn A, Bạn B]` cũng được chấp nhận.
@@ -23,6 +24,8 @@ Có thể nhập tên ngăn bằng dấu phẩy như trên, hoặc dùng mảng 
 ```powershell
 npm run links
 ```
+
+Các URL tự có dạng `?to=Minh+Anh&v=5`. `PREVIEW_VERSION` trong `.env.local` điều khiển giá trị `v`; nếu bỏ trống thì mặc định hiện tại là `5`. Khi cần một bộ link phiên bản mới, tăng số rồi chạy lại lệnh.
 
 4. Mở `private/invitation-links.txt`, sao chép link của từng người và gửi qua Zalo / Messenger. Bản JSON có ở `private/invitation-links.json`.
 
