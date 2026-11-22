@@ -41,7 +41,7 @@ npm run links -- "Minh Anh" "Quốc Bảo"
 - Chữ ký: tìm `With love, your almost-graduate.`.
 - Năm cho nút lịch: tìm `const eventYear = 2026;`.
 - Sơ đồ riêng để tham khảo / chỉnh vector: `docs/assets/campus-arrival.svg`. Bản đang hiện trong thiệp được nhúng trực tiếp trong `docs/index.html`.
-- Các font, logo và bản đồ đều đã nhúng trong HTML.
+- Font của trang hosted nằm trong `docs/assets/fonts.css` và `docs/assets/fonts/`; logo và bản đồ vẫn nhúng trong HTML. Tách font giúp trang nhẹ hơn khi ứng dụng chat lấy thông tin preview.
 
 ## Xem thử và kiểm tra
 
