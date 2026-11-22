@@ -13,8 +13,10 @@ Cần Node.js 22 trở lên; không cần cài thêm thư viện.
 
 ```dotenv
 SITE_URL=https://NguyenHoangNam-1410.github.io/graduation-invitation/
-GUEST_NAMES='["Minh Anh", "Quốc Bảo", "Như Mai"]'
+GUEST_NAMES='Minh Anh, Quốc Bảo, Như Mai'
 ```
+
+Có thể nhập tên ngăn bằng dấu phẩy như trên, hoặc dùng mảng JSON có dấu nháy kép quanh từng tên. Danh sách dạng `[Bạn A, Bạn B]` cũng được chấp nhận.
 
 3. Mở terminal trong thư mục repo và chạy:
 

@@ -2,7 +2,7 @@ import { existsSync } from 'node:fs';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { loadEnvFile } from 'node:process';
 import { fileURLToPath } from 'node:url';
-import { buildInvitationLinks } from '../lib/invitations.mjs';
+import { buildInvitationLinks, parseGuestNames } from '../lib/invitations.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const envPath = fileURLToPath(new URL('../.env.local', import.meta.url));
@@ -11,7 +11,7 @@ try {
   if (existsSync(envPath)) loadEnvFile(envPath);
   if (!process.env.SITE_URL) throw new Error('Hãy sao chép .env.example thành .env.local và điền SITE_URL.');
   const suppliedNames = process.argv.slice(2);
-  const guests = suppliedNames.length ? suppliedNames : JSON.parse(process.env.GUEST_NAMES || '[]');
+  const guests = suppliedNames.length ? suppliedNames : parseGuestNames(process.env.GUEST_NAMES || '');
   const links = buildInvitationLinks(process.env.SITE_URL, guests);
   const destination = new URL('../private/', import.meta.url);
   await mkdir(destination, { recursive: true });
