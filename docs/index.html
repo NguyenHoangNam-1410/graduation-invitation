@@ -66,9 +66,13 @@
     .letter { max-width:540px; margin:0 auto; color:var(--muted); line-height:1.85; font-size:16px; }
     .letter strong { color:var(--ink); font-weight:500; }
     .flourish { color:var(--blue); width:150px; height:28px; margin:23px auto 20px; }
-    .event-details { display:grid; grid-template-columns:1fr 1.05fr 1fr; max-width:700px; margin:0 auto; align-items:center; }
-    .event-details > div { padding:0 24px; }
+    .event-details { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); max-width:720px; margin:0 auto; align-items:stretch; }
+    .event-details > div { min-width:0; padding:0 18px; display:grid; grid-template-rows:24px 76px 26px; row-gap:6px; align-items:center; justify-items:center; }
     .event-details > div + div { border-left:1px solid var(--line); }
+    .event-details .detail-label,.event-details .date-month { margin:0; }
+    .event-details .time,.event-details .date-number,.event-details .venue-short { margin:0; }
+    .event-details .date-number { transform:translateY(-7px); }
+    .event-details .timezone,.event-details .venue-city { margin:0; line-height:1.6; }
     .detail-label { display:block; text-transform:uppercase; font-size:11px; letter-spacing:.2em; color:var(--muted); margin-bottom:6px; }
     .time { font:500 27px/1.2 var(--serif); white-space:nowrap; color:var(--navy); }
     .timezone { display:block; color:var(--muted); font-size:12px; margin-top:4px; }
@@ -218,6 +222,14 @@
       .map-toolbar-title { line-height:1.7; }
       .map-enlarge { font-size:12px; }
       .map-dialog-title { font-size:25px; }
+      .event-details > div { padding:0 8px; grid-template-rows:24px 70px 42px; }
+      .event-details .date-block { grid-template-rows:24px 70px 24px; }
+    }
+
+    @media(max-width:400px) {
+      .event-details .time { font-size:22px; }
+      .event-details .time small:not(:empty) { display:block; line-height:1.2; }
+      .event-details .timezone,.event-details .venue-city { font-size:11px; }
     }
 
     @media print { body,.page-shell { background:white; } .topbar,.section-divider,.location,.closing,footer,.invite-bottom,.toast { display:none; } main { max-width:none; } .invitation { margin:0; box-shadow:none; break-inside:avoid; } .invite-frame { padding-top:60px; padding-bottom:60px; } }
