@@ -12,5 +12,8 @@
     "links": "node scripts/generate-links.mjs",
     "check": "node --test",
     "check:fonts": "python scripts/check-fonts.py"
+  },
+  "dependencies": {
+    "@resvg/resvg-js": "^2.6.2"
   }
 }

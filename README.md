@@ -4,9 +4,15 @@ Thiệp mời tốt nghiệp song ngữ Việt / Anh (mặc định tiếng Vi�
 
 Trang: https://NguyenHoangNam-1410.github.io/graduation-invitation/
 
-## Nhập danh sách tên và lấy link gửi
+## Tạo thiệp dọc có tên và link gửi
 
-Cần Node.js 22 trở lên; không cần cài thêm thư viện.
+Cần Node.js 22 trở lên. Cài thư viện một lần trong thư mục repo:
+
+```powershell
+npm ci
+```
+
+Ảnh được render trực tiếp bằng SVG và font có sẵn trong repo; không cần cài trình duyệt hay font vào Windows.
 
 1. Mở `.env.local` trong thư mục repo. Nếu chưa có, sao chép `.env.example` thành `.env.local`.
 2. Điền tên người nhận theo mẫu sau:
@@ -15,6 +21,7 @@ Cần Node.js 22 trở lên; không cần cài thêm thư viện.
 SITE_URL=https://NguyenHoangNam-1410.github.io/graduation-invitation/
 GUEST_NAMES='Minh Anh, Quốc Bảo, Như Mai'
 PREVIEW_VERSION=6
+DEFAULT_LANGUAGE=vi
 ```
 
 Có thể nhập tên ngăn bằng dấu phẩy như trên, hoặc dùng mảng JSON có dấu nháy kép quanh từng tên. Danh sách dạng `[Bạn A, Bạn B]` cũng được chấp nhận.
@@ -25,9 +32,13 @@ Có thể nhập tên ngăn bằng dấu phẩy như trên, hoặc dùng mảng 
 npm run links
 ```
 
-Các URL tự có dạng `?to=Minh+Anh&v=6`. `PREVIEW_VERSION` trong `.env.local` điều khiển giá trị `v`; nếu bỏ trống thì mặc định hiện tại là `6`. Khi cần một bộ link phiên bản mới, tăng số rồi chạy lại lệnh.
+`DEFAULT_LANGUAGE=vi` tạo ảnh tiếng Việt và link mở tiếng Việt. Đổi thành `DEFAULT_LANGUAGE=en` để tạo cả ảnh và link tiếng Anh. Bỏ trống thì dùng `vi`. Tiêu đề “Graduation Ceremony” và tên người nhận giữ nguyên trong cả hai bản.
 
-4. Mở `private/invitation-links.txt`, sao chép link của từng người và gửi qua Zalo / Messenger. Bản JSON có ở `private/invitation-links.json`.
+Các URL có dạng `?to=Minh+Anh&v=6&lang=vi`. Tham số `lang` được ưu tiên hơn ngôn ngữ từng lưu trên trình duyệt; người nhận vẫn có thể dùng nút VI / EN. `PREVIEW_VERSION` điều khiển giá trị `v`; nếu bỏ trống thì mặc định hiện tại là `6`.
+
+4. Mở `private/invitation-links.txt`. Mỗi mục ghi tên, đường dẫn ảnh và link tương ứng. Gửi ảnh trước, rồi dán link của đúng người đó qua Zalo / Messenger.
+
+Ảnh PNG dọc **1080 × 1620** nằm trong `private/cards/vi/` hoặc `private/cards/en/`. Tên người nhận được in trên thiệp, tự xuống dòng / giảm cỡ chữ khi dài và giữ dấu tiếng Việt. Tên file có số thứ tự, tên không dấu và mã ngắn để tránh trùng. JSON tại `private/invitation-links.json` có các trường `name`, `url`, `language`, `image`; đường dẫn `image` tính từ thư mục `private/`. Mỗi lần chạy, danh sách TXT/JSON phản ánh đúng danh sách và ngôn ngữ vừa tạo; ảnh từ lần chạy trước vẫn được giữ.
 
 Ví dụ chạy nhanh mà không sửa danh sách:
 
@@ -35,16 +46,17 @@ Ví dụ chạy nhanh mà không sửa danh sách:
 npm run links -- "Minh Anh" "Quốc Bảo"
 ```
 
-`.env.local` và thư mục `private/` được Git bỏ qua. Website không tải danh sách tên này; mỗi link chỉ mang tên của người nhận ở tham số `?to=...`. Đây là cá nhân hóa lời chào, không phải xác thực người xem.
+`.env.local`, danh sách tên và toàn bộ ảnh cá nhân trong `private/` được Git bỏ qua. Website không tải danh sách này; mỗi link chỉ mang tên của người nhận ở tham số `?to=...`. Đây là cá nhân hóa lời chào, không phải xác thực người xem.
 
 ## Sửa thiệp
 
 - Nội dung và bảng bản dịch: `docs/index.html`. Tìm `id="invitation-translations"` để sửa cả hai ngôn ngữ.
+- Nội dung và bố cục ảnh dọc: `lib/portrait.mjs` (bảng `copy.vi` / `copy.en`). Sau khi sửa, chạy lại `npm run links` để xuất ảnh mới. Nội dung ảnh và nội dung web được sửa riêng; logo và font lấy chung từ website.
 - Tên hiển thị mặc định khi link không có `?to`: tìm `id="guest-name"`.
 - Chữ ký: sửa khóa `footerSignature` trong bảng bản dịch.
 - Năm cho nút lịch: tìm `const eventYear = 2026;`.
-- Sơ đồ riêng để tham khảo / chỉnh vector: `docs/assets/campus-arrival.svg`. Bản đang hiện trong thiệp được nhúng trực tiếp trong `docs/index.html`.
-- Font của trang hosted nằm trong `docs/assets/fonts.css` và `docs/assets/fonts/`; logo và bản đồ vẫn nhúng trong HTML. Tách font giúp trang nhẹ hơn khi ứng dụng chat lấy thông tin preview.
+- Sơ đồ riêng để tham khảo / chỉnh vector: `docs/assets/campus-arrival.svg` và `docs/assets/campus-arrival-vi.svg`.
+- Font của trang hosted nằm trong `docs/assets/fonts.css` và `docs/assets/fonts/`; logo nhúng trong HTML.
 
 ## Xem thử và kiểm tra
 
@@ -66,7 +78,7 @@ git commit -m "Update invitation"
 git push
 ```
 
-Danh sách tên trong `.env.local` không cần deploy lại; chỉ chạy `npm run links` để tạo link mới.
+Danh sách tên và `DEFAULT_LANGUAGE` trong `.env.local` không cần deploy lại; chỉ chạy `npm run links` để tạo ảnh và link mới.
 
 ## Nguồn tài nguyên
 

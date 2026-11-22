@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { buildInvitationLinks, validateGuests, parseGuestNames, DEFAULT_PREVIEW_VERSION } from '../lib/invitations.mjs';
+import { buildInvitationLinks, validateGuests, parseGuestNames, parseLanguage, DEFAULT_PREVIEW_VERSION } from '../lib/invitations.mjs';
 
 test('Vietnamese names and URL punctuation remain one recipient parameter', () => {
   const name = 'Quốc Bảo & An + Bình #1';
@@ -9,7 +9,8 @@ test('Vietnamese names and URL punctuation remain one recipient parameter', () =
   assert.equal(parsed.pathname, '/invitation/');
   assert.equal(parsed.searchParams.get('to'), name);
   assert.equal(parsed.searchParams.get('v'), DEFAULT_PREVIEW_VERSION);
-  assert.deepEqual([...parsed.searchParams.keys()], ['to', 'v']);
+  assert.equal(parsed.searchParams.get('lang'), 'vi');
+  assert.deepEqual([...parsed.searchParams.keys()], ['to', 'v', 'lang']);
 });
 
 test('normalizes Unicode and avoids duplicate links', () => {
@@ -74,4 +75,14 @@ test('rejects empty or malformed preview versions with a clear error', () => {
   for (const version of ['', ' ', '5&to=Other']) {
     assert.throws(() => buildInvitationLinks('https://example.github.io/invitation/', ['Bạn A'], version), /PREVIEW_VERSION/);
   }
+});
+
+test('uses an explicit language so an old browser preference cannot override the invitation', () => {
+  for (const language of ['vi', 'en']) {
+    const [{ url }] = buildInvitationLinks('https://example.com/?lang=stale', ['Đình Quang'], '6', language);
+    assert.deepEqual(new URL(url).searchParams.getAll('lang'), [language]);
+  }
+  assert.equal(parseLanguage(), 'vi');
+  assert.equal(parseLanguage(' EN '), 'en');
+  assert.throws(() => parseLanguage('fr'), /DEFAULT_LANGUAGE/);
 });
