@@ -26,7 +26,7 @@ test('family invitation shows the dinner details without the campus parking guid
   assert.doesNotMatch(html, /DTEND/);
   assert.doesNotMatch(html, /campus-arrival|parking|gửi xe/i);
   assert.doesNotMatch(html, /__LOGO__/);
-  assert.match(html, /assets\/family-preview-vi\.png/);
+  assert.match(html, /assets\/family-preview-vi\.png\?v=2/);
 });
 
 test('family portrait uses the formal dinner copy and escapes names', () => {

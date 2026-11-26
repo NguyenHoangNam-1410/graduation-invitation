@@ -21,7 +21,9 @@ try {
   const suppliedNames = args.filter((arg) => !arg.startsWith('--card='));
   const guests = suppliedNames.length ? suppliedNames
     : parseGuestNames(process.env[family ? 'FAMILY_GUEST_NAMES' : 'GUEST_NAMES'] || '');
-  const previewVersion = process.env.PREVIEW_VERSION?.trim() || DEFAULT_PREVIEW_VERSION;
+  // Thiệp gia đình dùng phiên bản riêng để ứng dụng chat không dùng lại preview cũ.
+  const previewVersion = (family ? process.env.FAMILY_PREVIEW_VERSION?.trim() || 'f2'
+    : process.env.PREVIEW_VERSION?.trim()) || DEFAULT_PREVIEW_VERSION;
   const language = parseLanguage(process.env.DEFAULT_LANGUAGE);
   const folder = family ? 'private/family/' : 'private/';
   const links = await generateInvitations({ siteUrl, guests, previewVersion, defaultLanguage: language,
