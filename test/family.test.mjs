@@ -23,6 +23,7 @@ test('family invitation shows the dinner details without the campus parking guid
   assert.match(html, /14 Einstein/);
   assert.match(html, /'DTSTART:' \+ eventStart/);
   assert.match(html, /const eventStart = '20261128T110000Z'/);
+  assert.doesNotMatch(html, /DTEND/);
   assert.doesNotMatch(html, /campus-arrival|parking|gửi xe/i);
   assert.doesNotMatch(html, /__LOGO__/);
   assert.match(html, /assets\/family-preview-vi\.png/);

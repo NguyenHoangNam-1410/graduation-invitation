@@ -68,7 +68,7 @@ npm run links:family
 
 Ảnh dọc 1080 × 1620 và danh sách link nằm trong `private/family/`. Link có dạng `family/?to=...&v=6&lang=vi`; lời chào hiển thị “Kính gửi {tên}”, mặc định “Quý gia đình”. `FAMILY_SITE_URL` (tùy chọn) ghi đè địa chỉ, mặc định là `SITE_URL` + `family/`. Cũng có thể truyền tên trực tiếp: `npm run links:family -- "Bác Hai"`.
 
-- Nội dung web: `docs/family/index.html` (bảng `id="invitation-translations"`; giờ trong lịch ở `eventStart` / `eventEnd`, mặc định 18:00–21:00).
+- Nội dung web: `docs/family/index.html` (bảng `id="invitation-translations"`; giờ bắt đầu trong lịch ở `eventStart`, không ghi giờ kết thúc).
 - Nội dung ảnh dọc: `lib/portrait.mjs`, bảng `copy.family`.
 - Ảnh preview khi chia sẻ: `docs/assets/family-preview-vi.png`, tạo lại bằng `npm run preview:family`.
 

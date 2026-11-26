@@ -332,7 +332,7 @@
     /* THÔNG TIN DỄ SỬA
        - Tên người nhận: ưu tiên ?to= trong link; mặc định là khóa defaultGuest.
        - Lời mời, giờ, địa điểm: sửa trong bảng bản dịch phía trên.
-       - Giờ trong lịch: eventStart / eventEnd (giờ UTC; 18:00 VN = 11:00 UTC).
+       - Giờ trong lịch: eventStart (giờ UTC; 18:00 VN = 11:00 UTC). Không ghi giờ kết thúc.
     */
     let personalizedGuestName = '';
     const guestFromLink = new URLSearchParams(window.location.search).get('to');
@@ -410,7 +410,6 @@
     }
 
     const eventStart = '20261128T110000Z';
-    const eventEnd = '20261128T140000Z';
     document.getElementById('save-date').addEventListener('click', () => {
       const text = invitationTranslations[currentLanguage];
       const calendar = [
@@ -418,7 +417,7 @@
         'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', 'BEGIN:VEVENT',
         'UID:graduation-dinner-20261128-0356378040@invitation.local',
         'DTSTAMP:' + new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, ''),
-        'DTSTART:' + eventStart, 'DTEND:' + eventEnd,
+        'DTSTART:' + eventStart,
         'SUMMARY:' + escapeCalendarText(text.calendarSummary),
         'LOCATION:' + escapeCalendarText(text.calendarLocation),
         'DESCRIPTION:' + escapeCalendarText(text.calendarDescription),
