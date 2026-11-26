@@ -10,6 +10,8 @@
   "scripts": {
     "dev": "node scripts/serve.mjs",
     "links": "node scripts/generate-links.mjs",
+    "links:family": "node scripts/generate-links.mjs --card=family",
+    "preview:family": "node scripts/render-family-preview.mjs",
     "check": "node --test",
     "check:fonts": "python scripts/check-fonts.py"
   },

@@ -30,6 +30,11 @@ test('generates a complete image and matching personalized link in either langua
       assert.ok(manifest.includes(entry.name) && manifest.includes(entry.image) && manifest.includes(entry.url));
     }
     assert.notDeepEqual(images[0], images[1]);
+    const [family] = await generateInvitations({ siteUrl: 'https://example.com/invitation/family/',
+      guests: ['Bác Hai'], cardType: 'family', destination });
+    assert.equal(new URL(family.url).pathname, '/invitation/family/');
+    const familyPng = await readFile(join(destination, family.image));
+    assert.equal(familyPng.readUInt32BE(20), 1620);
   } finally { await rm(destination, { recursive: true, force: true }); }
 });
 

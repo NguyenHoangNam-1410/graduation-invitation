@@ -48,6 +48,30 @@ npm run links -- "Minh Anh" "Quốc Bảo"
 
 `.env.local`, danh sách tên và toàn bộ ảnh cá nhân trong `private/` được Git bỏ qua. Website không tải danh sách này; mỗi link chỉ mang tên của người nhận ở tham số `?to=...`. Đây là cá nhân hóa lời chào, không phải xác thực người xem.
 
+## Thiệp tiệc mừng gia đình
+
+Thiệp thứ hai, lời lẽ trang trọng, mời gia đình dự tiệc mừng tốt nghiệp: **18:00, Thứ Bảy 28/11/2026, Nhà hàng Sesan – 14 Einstein, Thủ Đức**. Không có sơ đồ trường hay hướng dẫn gửi xe.
+
+Trang: https://NguyenHoangNam-1410.github.io/graduation-invitation/family/
+
+1. Trong `.env.local`, thêm danh sách người nhận riêng:
+
+```dotenv
+FAMILY_GUEST_NAMES='Ông bà nội, Bác Hai và gia đình'
+```
+
+2. Chạy:
+
+```powershell
+npm run links:family
+```
+
+Ảnh dọc 1080 × 1620 và danh sách link nằm trong `private/family/`. Link có dạng `family/?to=...&v=6&lang=vi`; lời chào hiển thị “Kính gửi {tên}”, mặc định “Quý gia đình”. `FAMILY_SITE_URL` (tùy chọn) ghi đè địa chỉ, mặc định là `SITE_URL` + `family/`. Cũng có thể truyền tên trực tiếp: `npm run links:family -- "Bác Hai"`.
+
+- Nội dung web: `docs/family/index.html` (bảng `id="invitation-translations"`; giờ trong lịch ở `eventStart` / `eventEnd`, mặc định 18:00–21:00).
+- Nội dung ảnh dọc: `lib/portrait.mjs`, bảng `copy.family`.
+- Ảnh preview khi chia sẻ: `docs/assets/family-preview-vi.png`, tạo lại bằng `npm run preview:family`.
+
 ## Sửa thiệp
 
 - Nội dung và bảng bản dịch: `docs/index.html`. Tìm `id="invitation-translations"` để sửa cả hai ngôn ngữ.
